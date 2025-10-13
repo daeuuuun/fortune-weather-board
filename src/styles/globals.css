@@ -1,0 +1,45 @@
+:root {
+--bg: #0b0d12;
+--fg: #f7f8fa;
+--muted: #98a2b3;
+--card: #12141a;
+--accent: #7c3aed;
+--text-color: #000;
+}
+
+
+[data-theme="light"] {
+--bg: #f7f8fa;
+--fg: #0b0d12;
+--muted: #475467;
+--card: #ffffff;
+--accent: #7c3aed;
+}
+
+[data-theme='dark'] {
+  --text-color: #fff;
+}
+
+select {
+  color-scheme: light;
+}
+
+[data-theme="dark"] select {
+  color-scheme: dark; /* ✅ 팝업 메뉴도 어둡게 */
+}
+
+* { box-sizing: border-box; }
+html, body, #root { height: 100%; }
+body {
+margin: 0;
+font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Noto Sans", Arial;
+background: var(--bg);
+color: var(--fg);
+}
+
+
+.container { max-width: 1040px; margin: 0 auto; padding: 24px; }
+.grid { display: grid; gap: 16px; }
+.gridCols {
+grid-template-columns: repeat(12, minmax(0, 1fr));
+}
