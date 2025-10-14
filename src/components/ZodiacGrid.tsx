@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
-import type { FortuneData, ZodiacSign } from "../types";
+import { ZODIAC_KR, type FortuneData, type ZodiacSign } from "../types";
 import { fetchFortune } from "../services/aztro";
 import s from "../styles/card.module.css";
 
 
-const SIGNS: ZodiacSign[] = ["aries", "taurus", "gemini", "cancer", "leo", "virgo", "libra", "scorpio", "sagittarius", "capricorn", "aquarius", "pisces"];
+const SIGNS: ZodiacSign[] = [
+  "aries", "taurus", "gemini", "cancer", "leo", "virgo",
+  "libra", "scorpio", "sagittarius", "capricorn", "aquarius", "pisces"
+];
 
 
 export default function ZodiacGrid({ onPick }: { onPick: (s: ZodiacSign) => void }) {
@@ -21,7 +24,7 @@ export default function ZodiacGrid({ onPick }: { onPick: (s: ZodiacSign) => void
         const results = await Promise.all(
           SIGNS.map(async (sign): Promise<FortuneData | null> => {
             try {
-              return await fetchFortune(sign, "today");
+              return await fetchFortune(sign);
             } catch {
               return null;
             }
@@ -43,7 +46,7 @@ export default function ZodiacGrid({ onPick }: { onPick: (s: ZodiacSign) => void
             const f = data[sign];
             return (
               <button key={sign} onClick={() => onPick(sign)} style={{ textAlign: 'left', background: 'transparent', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12, padding: 12, cursor: 'pointer' }}>
-                <div style={{ fontWeight: 700, marginBottom: 6 }}>{sign}</div>
+                <div style={{ fontWeight: 700, marginBottom: 6 }}>{ZODIAC_KR[sign]}</div>
                 <div className={s.meta} style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
                   {f?.description || '—'}
                 </div>

@@ -9,16 +9,30 @@ weather: { main: string; description: string; icon: string }[];
 
 
 export type ZodiacSign =
-| "aries" | "taurus" | "gemini" | "cancer" | "leo" | "virgo"
-| "libra" | "scorpio" | "sagittarius" | "capricorn" | "aquarius" | "pisces";
+  | "aries" | "taurus" | "gemini" | "cancer" | "leo" | "virgo"
+  | "libra" | "scorpio" | "sagittarius" | "capricorn" | "aquarius" | "pisces";
 
+// 표시용 이름
+export const ZODIAC_KR: Record<ZodiacSign, string> = {
+  aries: "양자리",
+  taurus: "황소자리",
+  gemini: "쌍둥이자리",
+  cancer: "게자리",
+  leo: "사자자리",
+  virgo: "처녀자리",
+  libra: "천칭자리",
+  scorpio: "전갈자리",
+  sagittarius: "사수자리",
+  capricorn: "염소자리",
+  aquarius: "물병자리",
+  pisces: "물고기자리",
+};
 
 export type FortuneData = {
 sign: ZodiacSign;
 date_range: string;
 current_date: string;
 description: string;
-compatibility: string;
 mood: string;
 color: string;
 lucky_number: string;

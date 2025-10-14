@@ -1,15 +1,13 @@
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
+import { defineConfig } from 'vite';
 
 export default defineConfig({
-  plugins: [react()],
   server: {
     proxy: {
-      "/aztro": {
-        target: "https://aztro.sameerkumar.website",
+      '/horoscope': {
+        target: 'https://ohmanda.com',
         changeOrigin: true,
-        // /aztro?sign=... -> /?sign=...
-        rewrite: (path) => path.replace(/^\/aztro/, ""),
+        secure: false,
+        rewrite: (path) => path.replace(/^\/horoscope\/?/, "/api/horoscope"),
       },
     },
   },
