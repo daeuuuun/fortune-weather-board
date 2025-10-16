@@ -10,7 +10,7 @@ export default function FortuneCard({ data }: { data: FortuneData | null }) {
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
     >
-      <h3 className={s.heading}>🔮 오늘의 운세 — {data.sign}</h3>
+      <h3 className={s.heading}>🔮 오늘의 운세</h3>
       <p style={{ marginTop: 8 }}>{data.description}</p>
       <div className={s.kv}>
         <div><span className={s.badge}>mood</span> {data.mood}</div>

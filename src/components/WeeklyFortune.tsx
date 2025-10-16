@@ -13,7 +13,7 @@ export default function WeeklyFortune({ items }: { items: SavedFortune[] }) {
       <ul style={{ margin: 0, paddingLeft: 16 }}>
         {last7.map((f, i) => (
           <li key={i} className={s.meta}>
-            {dayjs(f.dateISO).format("MM/DD")} · {f.sign} — {f.mood} — {f.description}
+            {dayjs(f.dateISO).format("MM/DD")} · {f.description}
           </li>
         ))}
       </ul>

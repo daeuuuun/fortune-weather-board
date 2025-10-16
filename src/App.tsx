@@ -72,7 +72,10 @@ export default function App() {
 
   // 운세/히스토리
   const [fortune, setFortune] = useState<FortuneData | null>(null);
-  const [history, setHistory] = useLocalStorage<SavedFortune[]>("fortune-history", []);
+  // 별자리에 따라 자동으로 로컬스토리지 key 분리
+  const storageKey = sign ? `fortune_${sign}` : "fortune_default";
+  const [history, setHistory] = useLocalStorage<SavedFortune[]>(storageKey, []);
+
   const todayISO = useMemo(() => dayjs().format("YYYY-MM-DD"), []);
 
   const calledRef = useRef<string | null>(null);
@@ -188,7 +191,9 @@ export default function App() {
           {sign && <div className={a.sub}>별자리: {KOREAN_SIGN_LABEL[sign]} ({sign})</div>}
         </div>
         <div className={a.controls}>
-          <button onClick={() => setProfile(null)}>프로필 변경</button>
+          <button onClick={() => setProfile(null)} className={a.profileBtn}>
+            🔄 프로필 변경
+          </button>
           <ThemeToggle />
         </div>
       </header>

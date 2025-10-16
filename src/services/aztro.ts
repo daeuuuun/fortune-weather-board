@@ -43,6 +43,19 @@ async function fetchWeather(): Promise<string | undefined> {
 export async function fetchFortune(sign: ZodiacSign): Promise<FortuneData> {
   const cleanSign = sign.toLowerCase().replace(/[^a-z]/g, "");
 
+  // 🎲 간단한 시드 기반 난수 생성기
+  function seededRandom(seed: string) {
+    let hash = 0;
+    for (let i = 0; i < seed.length; i++) {
+      hash = (hash * 31 + seed.charCodeAt(i)) % 1000000;
+    }
+    return () => {
+      hash = (hash * 1664525 + 1013904223) % 4294967296;
+      return hash / 4294967296;
+    };
+  }
+
+
   // 🪄 1. 운세 API 호출
   const res = await fetch(`http://localhost:5174/horoscope/${cleanSign}`);
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -58,10 +71,14 @@ export async function fetchFortune(sign: ZodiacSign): Promise<FortuneData> {
   // 💫 4. mood 결정
   const mood: MoodCategory = pickMood(data.horoscope, weatherMain);
 
-  // 🎁 5. 행운 요소 생성
-  const randomColor = COLORS[Math.floor(Math.random() * COLORS.length)];
-  const randomNumber = String(Math.floor(Math.random() * 99) + 1);
-  const randomTime = TIMES[Math.floor(Math.random() * TIMES.length)];
+  // 🎁 5. 행운 요소 생성 (날짜+별자리로 고정)
+  const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
+  const seed = `${cleanSign}-${today}`;
+  const rand = seededRandom(seed);
+
+  const randomColor = COLORS[Math.floor(rand() * COLORS.length)];
+  const randomNumber = String(Math.floor(rand() * 99) + 1);
+  const randomTime = TIMES[Math.floor(rand() * TIMES.length)];
 
   // 🧾 6. 최종 반환
   return {
